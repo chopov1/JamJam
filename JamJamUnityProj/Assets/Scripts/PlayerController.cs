@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Weapon.transform.position = this.transform.position;
                 Weapon.SetActive(true);
+                Weapon.transform.position = this.transform.position;
                 boomerangScript.SetPlayerPos(transform.position, dir);
             }
         }

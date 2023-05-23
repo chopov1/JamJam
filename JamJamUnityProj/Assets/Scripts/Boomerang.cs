@@ -50,7 +50,6 @@ public class Boomerang : MonoBehaviour
         }
         if(curDistance > maxDistance && !returning)
         {
-            Debug.Log("returning");
             returning = true;
         }
         if(curDistance < 0)
