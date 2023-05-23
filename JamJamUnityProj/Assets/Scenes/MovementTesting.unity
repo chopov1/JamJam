@@ -495,7 +495,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8729358557626437941, guid: ddf00ba5e19bf4e48a110ec8e1f3aec5, type: 3}
   player: {fileID: 207373008}
   numOfObjs: 5
-  SpawnSpeed: 10
+  SpawnSpeed: 3
 --- !u!4 &2142781875
 Transform:
   m_ObjectHideFlags: 0
