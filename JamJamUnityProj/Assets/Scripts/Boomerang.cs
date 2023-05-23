@@ -12,10 +12,13 @@ public class Boomerang : MonoBehaviour
     bool returning;
 
     float curDistance;
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         sprite = this.transform.GetChild(0).gameObject;
+    }
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class Boomerang : MonoBehaviour
 
     public void SetPlayerPos(Vector2 playerPos, Vector2 playerDir)
     {
+        
         this.playerPos = playerPos;
         endPos = playerPos + (playerDir * maxDistance);
         returning = false;
