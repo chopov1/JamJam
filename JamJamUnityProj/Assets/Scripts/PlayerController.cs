@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     Vector2 dir;
     [SerializeField]
-    float speed, friction;
+    float speed;
 
     public GameObject WeaponPrefab;
     public GameObject Weapon;
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //temp code for making the boomerang. could do object pooling or something else if we want multiple in the future doesnt have to be a prefab
         Weapon = Instantiate(WeaponPrefab);
         boomerangScript = Weapon.GetComponent<Boomerang>();
         Weapon.SetActive(false);
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     void movePlayer()
     {
         dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        //keeps smooth acceleration and deccelleration, but keeps moving diagonal from being faster then moving on one axis
         if(dir.magnitude > 1)
         {
             dir.Normalize();

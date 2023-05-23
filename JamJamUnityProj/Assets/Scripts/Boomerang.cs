@@ -6,36 +6,61 @@ public class Boomerang : MonoBehaviour
 {
     Vector2 playerPos, endPos, dir;
     [SerializeField]
-    float speed, distance, rotationSpeed;
-    
+    float speed, maxDistance, rotationSpeed;
+
+    GameObject sprite;
+    bool returning;
+
+    float curDistance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        sprite = this.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //spin();
+        spin();
         moveBoomerang();
     }
 
     public void SetPlayerPos(Vector2 playerPos, Vector2 playerDir)
     {
         this.playerPos = playerPos;
-        //transform.rotation = Quaternion.LookRotation(playerDir);
-        endPos = playerPos + (playerDir * distance);
+        endPos = playerPos + (playerDir * maxDistance);
+        returning = false;
+        curDistance = 0;
+        sprite.SetActive(true);
     }
 
     void moveBoomerang()
     {
-        dir = (endPos - playerPos).normalized;
-        transform.Translate(dir * speed * Time.deltaTime);
+        if(!returning)
+        {
+            dir = (endPos - playerPos).normalized;
+            transform.Translate(dir * speed * Time.deltaTime);
+            curDistance += speed * Time.deltaTime;
+        }
+        if(returning)
+        {
+            dir = (playerPos- endPos).normalized;
+            transform.Translate(dir * speed * Time.deltaTime);
+            curDistance -= speed * Time.deltaTime;
+        }
+        if(curDistance > maxDistance && !returning)
+        {
+            Debug.Log("returning");
+            returning = true;
+        }
+        if(curDistance < 0)
+        {
+            sprite.SetActive(false);
+        }
     }
     void spin()
     {
-        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime, Space.Self);
+        sprite.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime, Space.Self);
     }
 
     
