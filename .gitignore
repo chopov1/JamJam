@@ -25,6 +25,7 @@
 
 # Visual Studio cache directory
 /.vs/
+JamJamUnityProj/.vs/
 
 # Gradle cache directory
 .gradle/
