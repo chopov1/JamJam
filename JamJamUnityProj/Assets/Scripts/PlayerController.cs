@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 dir;
+    public Vector2 dir;
     [SerializeField]
     float speed;
 
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void movePlayer()
     {
-        dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        dir.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         //keeps smooth acceleration and deccelleration, but keeps moving diagonal from being faster then moving on one axis
         if(dir.magnitude > 1)
         {
