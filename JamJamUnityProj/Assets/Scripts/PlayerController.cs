@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Vector2 dir;
+    private Vector2 dir;
+
     [SerializeField]
     float speed;
 
