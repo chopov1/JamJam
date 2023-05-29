@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boomerang : MonoBehaviour
 {
-    Vector2 playerPos, endPos, dir;
+    Vector3 playerPos, endPos, dir;
     [SerializeField]
     float speed, maxDistance, rotationSpeed;
 
@@ -28,11 +28,12 @@ public class Boomerang : MonoBehaviour
         moveBoomerang();
     }
 
-    public void SetPlayerPos(Vector2 playerPos, Vector2 playerDir)
+    public void SetPlayerPos(Vector3 playerPos, Vector3 aimDirection)
     {
         
         this.playerPos = playerPos;
-        endPos = playerPos + (playerDir * maxDistance);
+        endPos = playerPos + (aimDirection * maxDistance);
+        Debug.Log(endPos);
         returning = false;
         curDistance = 0;
         sprite.SetActive(true);
