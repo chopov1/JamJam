@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     private Player playerReference;
     public Vector2 moveDirection;
     public Vector2 aimDirection;
+    private PlayerInputActions controls;
+
+    private Rigidbody2D playerRigidbody;
+    public float walkSpeed = 10f;
 
     //[SerializeField] float speed;
     [SerializeField] float rotationalSpeed;
@@ -19,7 +23,6 @@ public class PlayerController : MonoBehaviour
     Boomerang boomerangScript;
     bool hasWeapon;
 
-    private PlayerInputActions controls;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         boomerangScript = Weapon.GetComponent<Boomerang>();
         Weapon.SetActive(false);
         hasWeapon = true;
+        playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -47,21 +51,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetMoveAndAimInput();
-        // actually move with the most recent input direction
-        if (moveDirection != Vector2.zero)
-        {
-            if (moveDirection.magnitude > 1)
-            {
-                moveDirection.Normalize();
-            }
-            transform.Translate(moveDirection * playerReference.movementSpeed * Time.deltaTime);
-        }
+        
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
     }
 
     private void GetMoveAndAimInput()
     {
         moveDirection = controls.Player.Move.ReadValue<Vector2>();
         aimDirection = controls.Player.Aim.ReadValue<Vector2>();
+    }
+
+    private void MovePlayer()
+    {
+        playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * Time.deltaTime, moveDirection.y * walkSpeed * Time.deltaTime);
     }
 
     void OnAim(InputValue inputValue)
