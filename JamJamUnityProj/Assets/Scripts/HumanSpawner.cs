@@ -52,9 +52,12 @@ public class HumanSpawner : MonoBehaviour
 
     void SpawnHuman()
     {
-        var human = humanPool[0];
-        human.SetActive(true);
-        humanPool.Remove(human);
+        if (humanPool.Count > 0)
+        {
+            var human = humanPool[0];
+            human.SetActive(true);
+            humanPool.Remove(human);
+        }
     }
 
     IEnumerator SpawnHuman(float time)

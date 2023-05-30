@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Player playerReference;
-    private Vector2 moveDirection;
-    private Vector3 aimDirection;
+    public Vector2 moveDirection;
+    public Vector2 aimDirection;
 
     //[SerializeField] float speed;
     [SerializeField] float rotationalSpeed;
@@ -18,6 +19,12 @@ public class PlayerController : MonoBehaviour
     Boomerang boomerangScript;
     bool hasWeapon;
 
+    private PlayerInputActions controls;
+
+    private void Awake()
+    {
+        controls = new PlayerInputActions();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,23 +36,34 @@ public class PlayerController : MonoBehaviour
         hasWeapon = true;
     }
 
+    private void OnEnable()
+    {
+
+        controls.Enable();
+        controls.Player.Throw.performed += OnThrow;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        // movePlayer();
-        // throwWeapon();
+        GetMoveAndAimInput();
+        // actually move with the most recent input direction
+        if (moveDirection != Vector2.zero)
+        {
+            if (moveDirection.magnitude > 1)
+            {
+                moveDirection.Normalize();
+            }
+            transform.Translate(moveDirection * playerReference.movementSpeed * Time.deltaTime);
+        }
     }
 
-    // Using the new input system and OnMove() so that it only calls when the player gives movement input
-    void OnMove(InputValue inputValue)
+    private void GetMoveAndAimInput()
     {
-        moveDirection = inputValue.Get<Vector2>();
-        if(moveDirection.magnitude > 1)
-        {
-            moveDirection.Normalize();
-        }
-        transform.Translate(moveDirection * playerReference.movementSpeed);
+        moveDirection = controls.Player.Move.ReadValue<Vector2>();
+        aimDirection = controls.Player.Aim.ReadValue<Vector2>();
     }
+
     void OnAim(InputValue inputValue)
     {
         Vector2 aimInput = inputValue.Get<Vector2>();
@@ -54,7 +72,7 @@ public class PlayerController : MonoBehaviour
         aimArrow.transform.localEulerAngles = new Vector3(0f, 0f, -angle);
         //aimDirection should in theory be the rotational equivalent of the direction the right stick is held
     }
-    void OnThrow()
+    void OnThrow(InputAction.CallbackContext ctx)
     {
         if(hasWeapon)
         {
