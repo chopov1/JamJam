@@ -42,9 +42,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-
         controls.Enable();
         controls.Player.Throw.performed += OnThrow;
+    }
+    private void OnDisable()
+    {
+        controls.Disable();
+        controls.Player.Throw.performed -= OnThrow;
     }
 
     // Update is called once per frame
@@ -78,6 +82,7 @@ public class PlayerController : MonoBehaviour
         aimArrow.transform.localEulerAngles = new Vector3(0f, 0f, -angle);
         //aimDirection should in theory be the rotational equivalent of the direction the right stick is held
     }
+
     void OnThrow(InputAction.CallbackContext ctx)
     {
         if(hasWeapon)
@@ -91,26 +96,5 @@ public class PlayerController : MonoBehaviour
             
         }
     }
-    void movePlayer()
-    {
-        moveDirection.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        //keeps smooth acceleration and deccelleration, but keeps moving diagonal from being faster then moving on one axis
-        if(moveDirection.magnitude > 1)
-        {
-            moveDirection.Normalize();
-        }
-        transform.Translate(moveDirection * playerReference.movementSpeed * Time.deltaTime);
-    }
-    void throwWeapon()
-    {
-        if (hasWeapon)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Weapon.SetActive(true);
-                Weapon.transform.position = this.transform.position;
-                boomerangScript.SetPlayerPos(transform.position, moveDirection);
-            }
-        }
-    }
+
 }
