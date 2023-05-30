@@ -5,10 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private Player playerReference;
     private Vector2 moveDirection;
     private Vector3 aimDirection;
 
-    [SerializeField] float speed;
+    //[SerializeField] float speed;
     [SerializeField] float rotationalSpeed;
 
     public GameObject WeaponPrefab;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerReference = GetComponent<Player>();
         //temp code for making the boomerang. could do object pooling or something else if we want multiple in the future doesnt have to be a prefab
         Weapon = Instantiate(WeaponPrefab);
         boomerangScript = Weapon.GetComponent<Boomerang>();
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection.Normalize();
         }
-        transform.Translate(moveDirection * speed);
+        transform.Translate(moveDirection * playerReference.movementSpeed);
     }
     void OnAim(InputValue inputValue)
     {
@@ -73,7 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection.Normalize();
         }
-        transform.Translate(moveDirection * speed * Time.deltaTime);
+        transform.Translate(moveDirection * playerReference.movementSpeed * Time.deltaTime);
     }
     void throwWeapon()
     {

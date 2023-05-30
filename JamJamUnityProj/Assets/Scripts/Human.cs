@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Human : MonoBehaviour
 {
+    private Player playerReference;
     private HumanSpawner spawner;
     private Collider2D hitbox;
     private Vector3 playerPos;
@@ -13,6 +14,7 @@ public class Human : MonoBehaviour
     {
         spawner = GetComponentInParent<HumanSpawner>();
         hitbox = GetComponent<Collider2D>();
+        playerReference = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -22,6 +24,7 @@ public class Human : MonoBehaviour
 
     void moveAwayFromPlayer()
     {
+        playerPos = playerReference.transform.position;
         Vector2 dir = (transform.position - playerPos).normalized;
         transform.Translate(dir * speed * Time.deltaTime);
     }
@@ -37,6 +40,7 @@ public class Human : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             spawner.humanPool.Add(this.gameObject);
+            playerReference.soulsReaped++;
             Reset();
         }
     }
