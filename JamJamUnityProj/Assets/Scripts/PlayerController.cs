@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private void GetMoveAndAimInput()
     {
         moveDirection = controls.Player.Move.ReadValue<Vector2>();
-        aimDirection = controls.Player.Aim.ReadValue<Vector2>();
+        Aim(controls.Player.Aim.ReadValue<Vector2>());
     }
 
     private void MovePlayer()
@@ -74,9 +74,8 @@ public class PlayerController : MonoBehaviour
         playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * Time.deltaTime, moveDirection.y * walkSpeed * Time.deltaTime);
     }
 
-    void OnAim(InputValue inputValue)
+    void Aim(Vector2 aimInput)
     {
-        Vector2 aimInput = inputValue.Get<Vector2>();
         float angle = Mathf.Atan2(aimInput.x, aimInput.y) * Mathf.Rad2Deg;
         aimDirection = new Vector3(0f, 0f, -angle);
         aimArrow.transform.localEulerAngles = new Vector3(0f, 0f, -angle);
