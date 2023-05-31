@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boomerang : MonoBehaviour
 {
+    Player playerReference;
     Vector3 playerPos, endPos, dir;
     [SerializeField]
     float speed, maxDistance, rotationSpeed;
@@ -15,6 +16,7 @@ public class Boomerang : MonoBehaviour
     private void Awake()
     {
         sprite = this.transform.GetChild(0).gameObject;
+        playerReference = FindObjectOfType<Player>();
     }
     void Start()
     {
@@ -30,10 +32,15 @@ public class Boomerang : MonoBehaviour
 
     public void SetPlayerPos(Vector3 playerPos, Vector3 aimDirection)
     {
-        
         this.playerPos = playerPos;
         endPos = playerPos + (aimDirection * maxDistance);
-        Debug.Log(endPos);
+        returning = false;
+        curDistance = 0;
+        sprite.SetActive(true);
+    }
+    public void SetEndPosition(Vector3 aimDirection)
+    {
+        endPos = playerReference.transform.position + (aimDirection * maxDistance);
         returning = false;
         curDistance = 0;
         sprite.SetActive(true);
@@ -43,13 +50,14 @@ public class Boomerang : MonoBehaviour
     {
         if(!returning)
         {
-            dir = (endPos - playerPos).normalized;
+            dir = (endPos - playerReference.transform.position).normalized;
             transform.Translate(dir * speed * Time.deltaTime);
             curDistance += speed * Time.deltaTime;
+            Debug.Log(curDistance);
         }
         if(returning)
         {
-            dir = (playerPos- endPos).normalized;
+            dir = (playerReference.transform.position - endPos).normalized;
             transform.Translate(dir * speed * Time.deltaTime);
             curDistance -= speed * Time.deltaTime;
         }

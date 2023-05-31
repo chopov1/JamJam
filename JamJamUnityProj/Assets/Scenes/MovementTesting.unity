@@ -242,6 +242,7 @@ Transform:
   - {fileID: 924134216}
   - {fileID: 463559867}
   - {fileID: 1630401387}
+  - {fileID: 297536479}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -258,12 +259,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
-  aimDirection: {x: 0, y: 0}
+  aimDirection: {x: 0, y: 0, z: 0}
   walkSpeed: 300
   rotationalSpeed: 1
   WeaponPrefab: {fileID: 6265953649802823274, guid: abfb5f94c87a68d4f8673e7571c7b441, type: 3}
   Weapon: {fileID: 0}
   aimArrow: {fileID: 1630401386}
+  scythe: {fileID: 297536480}
+  hasWeapon: 0
 --- !u!114 &207373013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +319,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!4 &297536479 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+  m_PrefabInstance: {fileID: 92535981908083846}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &297536480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+  m_PrefabInstance: {fileID: 92535981908083846}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee2bc58f3a2ac74fb9a3aa0325e29c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &463559866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,3 +1069,76 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &92535981908083846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 207373010}
+    m_Modifications:
+    - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: scytheSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: scytheDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: scytheRotationalSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629812445763782287, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386857242664460423, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_Name
+      value: Scythe
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386857242664460423, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
