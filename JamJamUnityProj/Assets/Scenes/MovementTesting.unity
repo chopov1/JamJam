@@ -1078,7 +1078,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
       propertyPath: scytheSpeed
-      value: 0.1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
       propertyPath: scytheDistance
