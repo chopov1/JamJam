@@ -12,7 +12,14 @@ public class Scythe : MonoBehaviour
     public bool goingOut;
     public Vector3 targetPosition;
     private Vector3 throwDirection;
+
+    bool isMoving;
     void Start()
+    {
+        
+    }
+
+    private void Awake()
     {
         goingOut = false;
         playerReference = FindObjectOfType<Player>();
@@ -20,12 +27,27 @@ public class Scythe : MonoBehaviour
     }
     void Update()
     {
-        transform.Rotate(Vector3.forward, scytheRotationalSpeed * Time.deltaTime, Space.Self);
+        rotateScythe();
+    }
+
+    void rotateScythe()
+    {
+        float speed;
+        if (!isMoving)
+        {
+            speed = scytheRotationalSpeed/10;
+        }
+        else
+        {
+            speed = scytheRotationalSpeed;
+        }
+        transform.Rotate(Vector3.forward, speed * Time.deltaTime, Space.Self);
     }
     void FixedUpdate()
     {
         if(goingOut)
         {
+            isMoving = true;
             SetScytheDirection(playerController.aimDirection);
             Vector3 changeInPosition = new Vector3(throwDirection.normalized.x, throwDirection.normalized.y, 0f) * scytheSpeed;
             Vector3 nextPosition = transform.position + changeInPosition;
@@ -41,7 +63,8 @@ public class Scythe : MonoBehaviour
             {
                 playerController.hasWeapon = true;
                 this.transform.position = playerReference.transform.position;
-                this.gameObject.SetActive(false);          
+                //this.gameObject.SetActive(false);
+                isMoving = false;
             }
         }
     }
