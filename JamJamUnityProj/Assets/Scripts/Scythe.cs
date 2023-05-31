@@ -27,11 +27,11 @@ public class Scythe : MonoBehaviour
         if(goingOut)
         {
             SetScytheDirection(playerController.aimDirection);
-            Vector3 nextPosition = new Vector3(throwDirection.normalized.x, throwDirection.normalized.y, 0f) * scytheSpeed;
-   
-            if(Vector3.Distance(playerReference.transform.position, nextPosition) < scytheDistance)
+            Vector3 changeInPosition = new Vector3(throwDirection.normalized.x, throwDirection.normalized.y, 0f) * scytheSpeed;
+            Vector3 nextPosition = transform.position + changeInPosition;
+            if (Vector3.Distance(playerReference.transform.position, nextPosition) < scytheDistance)
             {
-                transform.position += nextPosition;
+                transform.position = nextPosition;
             }
         }
         else

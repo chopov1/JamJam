@@ -655,7 +655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &949861987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,7 +1037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2142781874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
       propertyPath: scytheDistance
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2919985961495903971, guid: 3fbf46a97c7d1f4489e6994441a8886a, type: 3}
       propertyPath: scytheRotationalSpeed
