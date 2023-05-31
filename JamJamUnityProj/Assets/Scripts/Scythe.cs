@@ -26,6 +26,7 @@ public class Scythe : MonoBehaviour
     {
         if(goingOut)
         {
+            SetScytheDirection(playerController.aimDirection);
             Vector3 nextPosition = new Vector3(throwDirection.normalized.x, throwDirection.normalized.y, 0f) * scytheSpeed;
    
             if(Vector3.Distance(playerReference.transform.position, nextPosition) < scytheDistance)
@@ -44,18 +45,12 @@ public class Scythe : MonoBehaviour
             }
         }
     }
-    public void ThrowScythe(Vector3 aimDirection)
+    public void SetScytheDirection(Vector3 aimDirection)
     {
         targetPosition = playerReference.transform.position + (aimDirection * scytheDistance);
         throwDirection = (playerReference.transform.position - targetPosition);
     }
-    public void RecallScythe(Transform parent)
-    {
-        transform.parent = parent;
-        goingOut = false;
-    }
 }
 
 // TODO fix bug where throw direction breaks after moving
-// TODO try to implement directional influence on scythe
 // TODO fix weird exponential effect using lerp

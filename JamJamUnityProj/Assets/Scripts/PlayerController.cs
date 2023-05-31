@@ -98,17 +98,18 @@ public class PlayerController : MonoBehaviour
             // boomerangScript.SetEndPosition(aimDirection);
             hasWeapon = false;
             scythe.gameObject.SetActive(true);
-            scythe.ThrowScythe(aimDirection);
+            scythe.SetScytheDirection(aimDirection);
             scythe.gameObject.transform.parent = this.transform.parent;
             scythe.goingOut = true;
         }
     }
     void OnThrow() // This still isn't calling and idk why, it's not a problem atm but if we want continous scythe control it will be
     {
-        scythe.ThrowScythe(aimDirection);
+        scythe.SetScytheDirection(aimDirection);
     }
     void Recall(InputAction.CallbackContext ctx)
     {
-        scythe.RecallScythe(this.transform);
+        scythe.transform.parent = this.transform.parent;
+        scythe.goingOut = false;
     }
 }
