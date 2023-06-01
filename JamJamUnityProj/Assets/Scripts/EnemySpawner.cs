@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     int numOfObjs;
 
     [SerializeField]
-    float SpawnSpeed;
+    public float spawnRate;
 
     Queue<GameObject> enemyPool;
     List<EnemyTest> enemyTestList;
@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (readyToSpawn)
         {
-            StartCoroutine(SpawnEnemy(SpawnSpeed));
+            StartCoroutine(SpawnEnemy(spawnRate));
         }
         foreach(EnemyTest test in enemyTestList)
         {

@@ -6,10 +6,10 @@ public class HumanSpawner : MonoBehaviour
 {
     private Collider2D spawnArea;
     [SerializeField] GameObject humanPrefab;
-    [SerializeField] float spawnRate;
+    [SerializeField] public float spawnRate;
     public List<GameObject> humanPool;
     List<Human> humanScripts;
-    [SerializeField] int poolMaxSize; 
+    [SerializeField] public int poolMaxSize; 
     private bool readyToSpawn = true;
 
     [SerializeField]
