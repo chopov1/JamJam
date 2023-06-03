@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Scythe scythe;
     public bool hasWeapon;
 
+    public PlayerAnimator playerAnimator;
+
 
     private void Awake()
     {
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour
         scythe.gameObject.SetActive(false);
 
         playerRigidbody = GetComponent<Rigidbody2D>();
+
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     private void OnEnable()
@@ -64,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        UpdateAnimationValues();
     }
 
     private void GetMoveAndAimInput()
@@ -111,5 +116,18 @@ public class PlayerController : MonoBehaviour
     {
         scythe.transform.parent = this.transform.parent;
         scythe.goingOut = false;
+    }
+
+    private void UpdateAnimationValues()
+    {
+        if (moveDirection.x != 0)
+        {
+            playerAnimator.UpdateFacingDirection(moveDirection.x > 0);
+        }
+        if (moveDirection.y != 0)
+        {
+            playerAnimator.UpdateForwardBool(moveDirection.y < 0);
+        }
+        playerAnimator.UpdateMoveBool(playerRigidbody.velocity);
     }
 }
