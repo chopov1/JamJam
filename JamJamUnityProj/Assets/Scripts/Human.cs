@@ -2,23 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Human : MonoBehaviour
+public class Human : Mob
 {
-    private Player playerReference;
-    private HumanSpawner spawner;
+    //private Player playerReference;
+    private MobSpawner spawner;
     private Collider2D hitbox;
-    private Vector3 playerPos;
-    [SerializeField]
-    float speed;
-
-    [SerializeField]
-    GameObject soulPrefab;
+    //private Vector3 playerPos;
+    [SerializeField] float speed;
+    [SerializeField] GameObject soulPrefab;
 
     void Start()
     {
-        spawner = GetComponentInParent<HumanSpawner>();
+        spawner = GetComponentInParent<MobSpawner>();
         hitbox = GetComponent<Collider2D>();
-        playerReference = FindObjectOfType<Player>();
+        //playerReference = FindObjectOfType<Player>();
     }
 
     private void Awake()
@@ -35,16 +32,10 @@ public class Human : MonoBehaviour
 
     void moveAwayFromPlayer()
     {
-        playerPos = playerReference.transform.position;
-        Vector2 dir = (transform.position - playerPos).normalized;
+        //playerPosition = playerReference.transform.position;
+        Vector2 dir = (transform.position - playerPosition).normalized;
         transform.Translate(dir * speed * Time.deltaTime);
     }
-
-    public void SetTarget(Vector3 pos)
-    {
-        playerPos = pos;
-    }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,7 +43,7 @@ public class Human : MonoBehaviour
         {
             DropSoul();
             this.gameObject.SetActive(false);
-            spawner.humanPool.Add(this.gameObject);
+            spawner.mobPool.Add(this.gameObject);
             Reset();
         }
     }

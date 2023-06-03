@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     private Player playerReference;
     private PlayerController playerController;
-    [SerializeField] private HumanSpawner humanSpawner;
-    [SerializeField] private EnemySpawner enemySpawner;
+    [SerializeField] private MobSpawner humanSpawner;
+    [SerializeField] private MobSpawner enemySpawner;
     [SerializeField] private GameObject inBetweenCanvas;
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
