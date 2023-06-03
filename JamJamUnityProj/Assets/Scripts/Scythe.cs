@@ -14,6 +14,11 @@ public class Scythe : MonoBehaviour
     private Vector3 throwDirection;
 
     bool isMoving;
+
+    [SerializeField]
+    AudioClip hitTest;
+
+    AudioSource scytheSource;
     void Start()
     {
         
@@ -24,6 +29,7 @@ public class Scythe : MonoBehaviour
         goingOut = false;
         playerReference = FindObjectOfType<Player>();
         playerController = FindObjectOfType<PlayerController>();
+        scytheSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -72,6 +78,21 @@ public class Scythe : MonoBehaviour
     {
         targetPosition = playerReference.transform.position + (aimDirection * scytheDistance);
         throwDirection = (playerReference.transform.position - targetPosition);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Human")
+        {
+            PlayScytheHitFX();
+        }
+    }
+
+    void PlayScytheHitFX()
+    {
+        //could maybe handle this in the sfx for what the scythe is hitting, but for now im gonna keep a general sound around lol. Could help things sound consistent without baking it into asset, allows for modularity.
+        scytheSource.pitch = Random.Range(0.7f, 1.3f);
+        scytheSource.PlayOneShot(hitTest);
     }
 }
 

@@ -45,9 +45,10 @@ public class Human : MonoBehaviour
         playerPos = pos;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.gameObject.tag == "PlayerWeapon")
+        if (collision.gameObject.tag == "PlayerWeapon")
         {
             DropSoul();
             this.gameObject.SetActive(false);
@@ -63,7 +64,7 @@ public class Human : MonoBehaviour
         {
             //maybe we do object pooling for this? idk if its necessary though collectable is a small object.
             GameObject g = Instantiate(soulPrefab);
-            g.transform.position = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), transform.position.z);
+            g.transform.position = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), -0.02f);
         }
     }
 

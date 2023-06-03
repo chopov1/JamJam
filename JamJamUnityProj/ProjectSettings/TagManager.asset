@@ -7,6 +7,7 @@ TagManager:
   - PlayerWeapon
   - Enemy
   - Soul
+  - Human
   layers:
   - Default
   - TransparentFX

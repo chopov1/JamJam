@@ -59,6 +59,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void ResetSpawner()
+    {
+        foreach(GameObject e in enemyPool)
+        {
+            e.SetActive(false);
+        }
+    }
+
     IEnumerator SpawnEnemy(float time)
     {
         readyToSpawn = false;

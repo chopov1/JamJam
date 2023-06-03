@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Collectable : MonoBehaviour
 {
+    private void Awake()
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +21,7 @@ public class Collectable : MonoBehaviour
         
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
@@ -23,4 +29,6 @@ public class Collectable : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+
 }

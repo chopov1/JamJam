@@ -60,6 +60,13 @@ public class HumanSpawner : MonoBehaviour
         }
     }
 
+    public void ResetSpawner()
+    {
+        foreach (GameObject e in humanPool)
+        {
+            e.SetActive(false);
+        }
+    }
     IEnumerator SpawnHuman(float time)
     {
         readyToSpawn = false;
