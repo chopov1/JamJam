@@ -33,10 +33,10 @@ public class Scythe : MonoBehaviour
     }
     void Update()
     {
-        rotateScythe();
+        RotateScythe();
     }
 
-    void rotateScythe()
+    void RotateScythe()
     {
         float speed;
         if (!isMoving)
@@ -69,7 +69,7 @@ public class Scythe : MonoBehaviour
             {
                 playerController.hasWeapon = true;
                 this.transform.position = playerReference.transform.position;
-                //this.gameObject.SetActive(false);
+                this.gameObject.SetActive(false);
                 isMoving = false;
             }
         }
@@ -95,6 +95,3 @@ public class Scythe : MonoBehaviour
         scytheSource.PlayOneShot(hitTest);
     }
 }
-
-// TODO fix bug where throw direction breaks after moving
-// TODO fix weird exponential effect using lerp

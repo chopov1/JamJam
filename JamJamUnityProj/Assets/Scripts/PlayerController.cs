@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
             scythe.gameObject.SetActive(true);
             scythe.SetScytheDirection(aimDirection);
             scythe.gameObject.transform.parent = this.transform.parent;
+            //aimArrow.gameObject.transform.parent = scythe.transform;
             scythe.goingOut = true;
         }
     }
@@ -114,7 +115,9 @@ public class PlayerController : MonoBehaviour
     }
     void Recall(InputAction.CallbackContext ctx)
     {
-        scythe.transform.parent = this.transform.parent;
+        // aimArrow.gameObject.transform.parent = this.transform;
+        // aimArrow.transform.position = Vector3.zero;
+        scythe.transform.parent = this.transform;
         scythe.goingOut = false;
     }
 

@@ -8,8 +8,11 @@ public class Player : MonoBehaviour
     public enum PlayerState { dead,alive}
     public PlayerState State;
     #region Upgradable Skills
+    public float health;
     public float movementSpeed;
     public float throwMaxDistance;
+    public float baseEnemyDamage;
+    public float defenseMulitplier;
     #endregion
     public int soulsReaped;
     AudioSource playerAS;
@@ -41,13 +44,28 @@ public class Player : MonoBehaviour
             case "Soul":
                 collectSoul();
                 break;
+            default: break;
+        }
+    }
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        switch (collider.gameObject.tag)
+        {
             case "Enemy":
-                playerDeath();
+                HurtPlayer(baseEnemyDamage);
+                if(health <= 0)
+                {
+                    playerDeath();
+                }
                 break;
             default: break;
         }
     }
 
+    void HurtPlayer(float damageAmount)
+    {
+        health -= damageAmount * defenseMulitplier;
+    }
     void playerDeath()
     {
         State = PlayerState.dead;
