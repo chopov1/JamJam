@@ -10,12 +10,23 @@ public class Human : MonoBehaviour
     private Vector3 playerPos;
     [SerializeField]
     float speed;
+
+    [SerializeField]
+    GameObject soulPrefab;
+
     void Start()
     {
         spawner = GetComponentInParent<HumanSpawner>();
         hitbox = GetComponent<Collider2D>();
         playerReference = FindObjectOfType<Player>();
     }
+
+    private void Awake()
+    {
+        
+    }
+
+
 
     private void Update()
     {
@@ -38,12 +49,24 @@ public class Human : MonoBehaviour
     {
         if (other.gameObject.tag == "PlayerWeapon")
         {
+            DropSoul();
             this.gameObject.SetActive(false);
             spawner.humanPool.Add(this.gameObject);
-            playerReference.soulsReaped++;
             Reset();
         }
     }
+
+    void DropSoul()
+    {
+        //do a random number for num of soul dropped maybe, make it var so its not magic
+        for (int i = 0; i < 3; i++)
+        {
+            //maybe we do object pooling for this? idk if its necessary though collectable is a small object.
+            GameObject g = Instantiate(soulPrefab);
+            g.transform.position = new Vector3(transform.position.x + Random.Range(-3, 3), transform.position.y + Random.Range(-3, 3), transform.position.z);
+        }
+    }
+
     void Reset()
     {
         // reseting variables upon returning to pool

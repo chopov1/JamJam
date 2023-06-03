@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Collectable : MonoBehaviour
 {
-    #region Upgradable Skills
-    public float movementSpeed;
-    public float throwMaxDistance;
-    #endregion
-    public int soulsReaped;
-    
+    // Start is called before the first frame update
     void Start()
     {
-        soulsReaped = 0;
+        
     }
 
     // Update is called once per frame
@@ -23,9 +18,9 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Soul")
+        if(collision.gameObject.tag == "Player")
         {
-            soulsReaped++;
+            Destroy(this.gameObject);
         }
     }
 }
