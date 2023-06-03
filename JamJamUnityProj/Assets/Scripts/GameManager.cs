@@ -26,12 +26,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(waveTime > 0f)
-            waveTime -= Time.deltaTime;
         if(waveTime <= 0f)
         {
             
             EndCurrentWave();
+        }
+        else
+        {
+            waveTime -= Time.deltaTime;
         }
     }
     public float Upgrade(float skillToUpgrade, float amount)
