@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour
 {
     private Player playerReference;
     private PlayerController playerController;
-    [SerializeField] private MobSpawner humanSpawner;
-    [SerializeField] private MobSpawner enemySpawner;
-    [SerializeField] private GameObject inBetweenCanvas;
+    
+    private MobSpawner humanSpawner;
+    //private MobSpawner enemySpawner;
+    [SerializeField] private GameObject inBetweenCanvas, hspawner;//espawner;
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
     [SerializeField] float waveLength;
@@ -19,12 +20,19 @@ public class GameManager : MonoBehaviour
     public float enemySpawnRateMultiplier;
 
     public UnityEvent BeginWave;
+    public UnityEvent EndWave;
     void Start()
     {
         playerReference = FindObjectOfType<Player>();
         playerController = FindObjectOfType<PlayerController>();
         waveTime = waveLength;
         waveNumber = 1;
+    }
+
+    private void Awake()
+    {
+        humanSpawner = hspawner.GetComponent<MobSpawner>();
+        //enemySpawner = espawner.GetComponent<MobSpawner>();
     }
 
     void Update()
@@ -59,10 +67,11 @@ public class GameManager : MonoBehaviour
     }
     public void EndCurrentWave()
     {
+        EndWave.Invoke();
         humanSpawner.ResetSpawner();
-        enemySpawner.ResetSpawner();
+        //enemySpawner.ResetSpawner();
         humanSpawner.enabled = false;
-        enemySpawner.enabled = false;
+        //enemySpawner.enabled = false;
         inBetweenCanvas.SetActive(true);
         //playerController.enabled = false;
     }
@@ -72,16 +81,17 @@ public class GameManager : MonoBehaviour
     }
     public void StartNextWave()
     {
-        BeginWave.Invoke();
+        
         //set player alive again
-        playerReference.State = Player.PlayerState.alive;
+        playerReference.ResetPlayer();
+        BeginWave.Invoke();
         inBetweenCanvas.SetActive(false);
         //playerController.enabled = true;
         waveTime = waveLength;
         waveNumber++;
         humanSpawner.enabled = true;
-        enemySpawner.enabled = true;
+        //enemySpawner.enabled = true;
         humanSpawner.spawnRate = humanSpawner.spawnRate * humanSpawnRateMultiplier;
-        enemySpawner.spawnRate = enemySpawner.spawnRate * enemySpawnRateMultiplier;
+        //enemySpawner.spawnRate = enemySpawner.spawnRate * enemySpawnRateMultiplier;
     }
 }

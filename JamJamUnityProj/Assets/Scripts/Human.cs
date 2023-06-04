@@ -5,15 +5,14 @@ using UnityEngine;
 public class Human : Mob
 {
     //private Player playerReference;
-    private MobSpawner spawner;
     private Collider2D hitbox;
     //private Vector3 playerPos;
     [SerializeField] float speed;
     [SerializeField] GameObject soulPrefab;
+    [SerializeField] int NumberOfSoulsToDrop, runDistance;
 
     void Start()
     {
-        spawner = GetComponentInParent<MobSpawner>();
         hitbox = GetComponent<Collider2D>();
         //playerReference = FindObjectOfType<Player>();
     }
@@ -27,7 +26,19 @@ public class Human : Mob
 
     private void Update()
     {
-        moveAwayFromPlayer();
+        if (playerToClose())
+        {
+            moveAwayFromPlayer();
+        }
+    }
+
+    bool playerToClose()
+    {
+        if(Vector3.Distance(playerPosition, transform.position) < runDistance)
+        {
+            return true;
+        }
+        return false;
     }
 
     void moveAwayFromPlayer()
@@ -43,7 +54,6 @@ public class Human : Mob
         {
             DropSoul();
             this.gameObject.SetActive(false);
-            spawner.mobPool.Add(this.gameObject);
             Reset();
         }
     }
@@ -51,7 +61,7 @@ public class Human : Mob
     void DropSoul()
     {
         //do a random number for num of soul dropped maybe, make it var so its not magic
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < NumberOfSoulsToDrop; i++)
         {
             //maybe we do object pooling for this? idk if its necessary though collectable is a small object.
             GameObject g = Instantiate(soulPrefab);

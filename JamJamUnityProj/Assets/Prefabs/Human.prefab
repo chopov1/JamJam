@@ -148,3 +148,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   soulPrefab: {fileID: 130414098738108299, guid: 0d5d986f522a6534a9dde45221a08418, type: 3}
+  NumberOfSoulsToDrop: 3
+  runDistance: 8

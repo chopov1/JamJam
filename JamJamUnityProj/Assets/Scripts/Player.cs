@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
-    public enum PlayerState { dead,alive}
+    public enum PlayerState { dead,alive,inactive}
     public PlayerState State;
+
+    float health;
     #region Upgradable Skills
-    public float health;
+    public float maxHealth;
     public float movementSpeed;
     public float throwMaxDistance;
     public float baseEnemyDamage;
@@ -20,13 +23,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     CollectableSO collectableSO;
 
+    [SerializeField]
+    Slider healthBar;
+
     private void Awake()
     {
         playerAS = GetComponent<AudioSource>();
+        healthBar.maxValue = maxHealth;
     }
 
     void Start()
     {
+        health = maxHealth;
+        SetHealth();
         State = PlayerState.alive;
         soulsReaped = 0;
     }
@@ -47,24 +56,41 @@ public class Player : MonoBehaviour
             default: break;
         }
     }
-    void OnTriggerStay2D(Collider2D collider)
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        switch (collider.gameObject.tag)
+        switch (collision.gameObject.tag)
         {
             case "Enemy":
-                HurtPlayer(baseEnemyDamage);
-                if(health <= 0)
+                if(State  == PlayerState.alive)
                 {
-                    playerDeath();
+                    HurtPlayer(baseEnemyDamage);
+                    if (health <= 0)
+                    {
+                        playerDeath();
+                    }
                 }
                 break;
             default: break;
         }
     }
 
+    public void ResetPlayer()
+    {
+        health = maxHealth;
+        SetHealth();
+        State = PlayerState.alive;
+    }
+
+    void SetHealth()
+    {
+        healthBar.value = health;
+    }
+    
     void HurtPlayer(float damageAmount)
     {
         health -= damageAmount * defenseMulitplier;
+        SetHealth();
     }
     void playerDeath()
     {

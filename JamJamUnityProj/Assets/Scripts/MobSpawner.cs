@@ -4,28 +4,52 @@ using UnityEngine;
 
 public class MobSpawner : MonoBehaviour
 {
+    public enum SpawnerState { active, inactive }
+    public SpawnerState State;
+
+    [SerializeField]
+    GameObject mobPrefab, player;
+    bool readyToSpawn;
     private Collider2D spawnArea;
-    [SerializeField] GameObject mobPrefab;
     [SerializeField] public float spawnRate;
-    public List<GameObject> mobPool;
+    public Queue<GameObject> mobPool;
     List<Mob> mobScripts;
-    [SerializeField] public int poolMaxSize; 
-    private bool readyToSpawn = true;
-    [SerializeField] GameObject player;
-    void Start()
+    [SerializeField] public int poolMaxSize;
+
+    //so it doesnt go behind BG
+    float zoffset = -0.02f;
+
+    private void Awake()
     {
+        mobPool = new Queue<GameObject>();
         mobScripts = new List<Mob>();
         spawnArea = GetComponent<Collider2D>();
-        mobPool = new List<GameObject>();
         InstantiateMobs();
+    }
+    void Start()
+    {
+        State = SpawnerState.active;
+        readyToSpawn = true;
     }
     void Update()
     {
-        if(readyToSpawn)
+        switch (State)
         {
-            StartCoroutine(SpawnMob(spawnRate));
+            case SpawnerState.active:
+                if (readyToSpawn)
+                {
+                    StartCoroutine(SpawnMob(spawnRate));
+                }
+                SetTargets();
+                break;
+            case SpawnerState.inactive:
+                break;
         }
-        SetTargets();
+    }
+
+    public void DeactivateSpawner()
+    {
+        State = SpawnerState.inactive;
     }
 
     void SetTargets()
@@ -40,35 +64,42 @@ public class MobSpawner : MonoBehaviour
     {
         for(int i = 0; i < poolMaxSize; i++)
         {
-            Vector2 randomSpawnPoint = new Vector2(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y));
-            var newMob = Instantiate(mobPrefab, randomSpawnPoint, Quaternion.identity, this.transform);
-            mobPool.Add(newMob);
+            Vector2 randomSpawnPoint = getSpawnPoint();
+            GameObject newMob = Instantiate(mobPrefab, randomSpawnPoint, Quaternion.identity);
+            mobPool.Enqueue(newMob);
             mobScripts.Add(newMob.GetComponent<Mob>());
             newMob.SetActive(false);
         }
     }
 
-    void Spawn()
+    private Vector3 getSpawnPoint()
     {
-        if (mobPool.Count > 0)
+        return new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), zoffset);
+    }
+
+    void SpawMob()
+    {
+        if (!mobPool.Peek().activeSelf)
         {
-            var mob = mobPool[0];
+            GameObject mob = mobPool.Dequeue();
+            mob.transform.position = getSpawnPoint();
             mob.SetActive(true);
-            mobPool.Remove(mob);
+            mobPool.Enqueue(mob);
         }
     }
 
     public void ResetSpawner()
     {
-        foreach (GameObject e in mobPool)
+        foreach (GameObject mob in mobPool)
         {
-            e.SetActive(false);
+            mob.SetActive(false);
         }
+        State = SpawnerState.active;
     }
     IEnumerator SpawnMob(float time)
     {
         readyToSpawn = false;
-        Spawn();
+        SpawMob();
         yield return new WaitForSeconds(time);
         readyToSpawn = true;
         yield return null;
