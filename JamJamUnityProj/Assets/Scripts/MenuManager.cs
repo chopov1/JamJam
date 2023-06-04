@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    private MagicItem magicItem = new MagicItem();
+    //private MagicItem magicItem = new MagicItem();
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
