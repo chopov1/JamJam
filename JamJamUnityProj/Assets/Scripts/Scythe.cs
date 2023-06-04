@@ -83,9 +83,9 @@ public class Scythe : MonoBehaviour
         throwDirection = (playerReference.transform.position - targetPosition);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Human")
+        if (collider.gameObject.tag == "Enemy" || collider.gameObject.tag == "Human")
         {
             PlayScytheHitFX();
         }

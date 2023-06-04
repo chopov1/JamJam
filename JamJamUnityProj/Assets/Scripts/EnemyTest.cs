@@ -25,9 +25,9 @@ public class EnemyTest : Mob
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "PlayerWeapon")
+        if (collider.gameObject.tag == "PlayerWeapon")
         {
             HurtMob(basePlayerDmg);
             if (health <= 0)

@@ -74,6 +74,17 @@ public class MobSpawner : MonoBehaviour
 
     private Vector3 getSpawnPoint()
     {
+        var randomX = Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x);
+        var randomY = Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y);
+        var spawnPoint = new Vector3(randomX,randomY,zoffset);
+        var cameraSize = new Vector3(Camera.main.pixelHeight, Camera.main.pixelWidth, 0);
+        var cameraBounds = new Bounds(Camera.main.gameObject.transform.position, cameraSize);
+        while(cameraBounds.Contains(spawnPoint))
+        {
+            randomX = Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x);
+            randomY = Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y);
+            spawnPoint = new Vector3(randomX,randomY,zoffset);
+        }
         return new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x), Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), zoffset);
     }
 

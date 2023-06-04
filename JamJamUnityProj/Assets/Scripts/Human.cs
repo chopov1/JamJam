@@ -48,9 +48,9 @@ public class Human : Mob
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "PlayerWeapon")
+        if (collider.gameObject.tag == "PlayerWeapon")
         {
             DropSoul();
             this.gameObject.SetActive(false);
