@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
 
         baseStats = ScriptableObject.CreateInstance<GameStats>();
         runStats = ScriptableObject.CreateInstance<GameStats>();
+
+        //MagicItem item = MagicItem.GenerateMagicItem();
     }
 
     // Update is called once per frame
