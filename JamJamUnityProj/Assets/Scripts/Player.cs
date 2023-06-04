@@ -10,13 +10,18 @@ public class Player : MonoBehaviour
     public PlayerState State;
 
     float health;
+
     #region Upgradable Skills
     public float maxHealth;
     public float movementSpeed;
     public float throwMaxDistance;
     public float baseEnemyDamage;
     public float defenseMulitplier;
+
+    public GameStats baseStats;
+    public GameStats runStats;
     #endregion
+
     public int soulsReaped;
     AudioSource playerAS;
 
@@ -38,6 +43,9 @@ public class Player : MonoBehaviour
         SetHealth();
         State = PlayerState.alive;
         soulsReaped = 0;
+
+        baseStats = ScriptableObject.CreateInstance<GameStats>();
+        runStats = ScriptableObject.CreateInstance<GameStats>();
     }
 
     // Update is called once per frame
