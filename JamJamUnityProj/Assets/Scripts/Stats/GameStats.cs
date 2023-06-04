@@ -45,4 +45,9 @@ public class GameStats : ScriptableObject
     {
         statistics[stat] = value;
     }
+
+    public static Stat GetRandomStat()
+    {
+        return (GameStats.Stat)System.Enum.Parse(typeof(GameStats.Stat), LaneLibrary.RandomMethods.Choose<string>(System.Enum.GetNames(typeof(GameStats.Stat))));
+    }
 }
