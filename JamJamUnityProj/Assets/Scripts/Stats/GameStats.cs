@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,43 @@ using UnityEngine;
 [CreateAssetMenu]
 public class GameStats : ScriptableObject
 {
-    [Header("Melee")]
-    public float MeleeDamage = 1f;
+    public enum Stat
+    {
+        MeleeDamage = 0,
+        BoomerangeDamage,
+        BoomerangSpeed,
+        BoomerangRange,
+        Health,
+        DamageResistance,
+        WalkSpeed,
+        LootMultiplier,
+        Luck,
+        Corruption
+    }
 
-    [Header("Boomerang")]
-    public float boomerangDamage = 1f;
-    public float boomerangSpeed = 1f;
-    public float boomerangRange = 1f;
+    public Dictionary<Stat, float> statistics;
 
-    [Header("Player")]
-    public float Health = 1f;
-    public float DamageResistance = 1f;
-    public float WalkSpeed = 1f;
-    public float LootMultiplier = 1f;
-    public float Luck = 1f;
-    public float Corruption = 1f;
+    public GameStats()
+    {
+        InitializeDictionary();
+    }
+
+    public void InitializeDictionary()
+    {
+        statistics = new Dictionary<Stat, float>();
+        foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+        {
+            statistics[stat] = 1f;
+        }
+    }
+
+    public float GetStat(Stat stat)
+    {
+        return statistics[stat];
+    }
+
+    public void SetStat(Stat stat, float value)
+    {
+        statistics[stat] = value;
+    }
 }
