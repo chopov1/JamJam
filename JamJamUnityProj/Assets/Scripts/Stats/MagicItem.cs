@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,41 +13,109 @@ public class MagicItem : ScriptableObject
     public GameStats.Stat buffedStat;
     public GameStats.Stat debuffedStat;
 
+    #region Ricky's Stuff
+    public Dictionary<string, string> itemAdjectives;
+    public Dictionary<string, string> itemNouns;
+    static List<string> positiveAdjectives;
+    static List<string> negativeAdjectives;
+    static List<string> positiveNouns;
+    static List<string> negativeNouns;
+    static Dictionary<GameStats.Stat, string> StatAndPositiveAdjective;
+    static Dictionary<GameStats.Stat, string> StatAndNegativeAdjective;
+    static Dictionary<GameStats.Stat, string> StatAndPositiveNoun;
+    static Dictionary<GameStats.Stat, string> StatAndNegativeNoun;
+
+    #endregion
+
+
     static List<string> adjectives;
     static List<string> nouns;
 
+
     static MagicItem()
     {
-        adjectives = new List<string>()
-        {
-            "Cursed",
-            "Lucky",
-            "Blessed",
-            "Enchanted",
-            "Banished",
-            "Hellish"
-        };
+        // adjectives = new List<string>()
+        // {
+        //     "Cursed",
+        //     "Lucky",
+        //     "Blessed",
+        //     "Enchanted",
+        //     "Banished",
+        //     "Hellish"
+        // };
 
-        nouns = new List<string>()
+        // nouns = new List<string>()
+        // {
+        //     "Elixir",
+        //     "Potion",
+        //     "Ale",
+        //     "Drink",
+        //     "Concoction",
+        //     "Tincture",
+        //     "Brew",
+        //     "Tonic"
+        // };
+
+        // Adjectives and Nouns are in the order that their respective stat appears in GameStats.Stat 
+        positiveAdjectives = new List<string>()
         {
-            "Elixir",
-            "Potion",
-            "Ale",
-            "Drink",
-            "Concoction",
-            "Tincture",
-            "Brew",
-            "Tonic"
+            "Empowering", // scythe damage up
+            "Skillful", // scythe speed up
+            "Sharp-Shooting", // scythe range up
+            "Tough", // health up
+            "Speedy", // walk speed up
+            "Lucky", // loot multiplier up
+            "Corrupted" // corruption up
         };
+        negativeAdjectives = new List<string>()
+        {
+            "Weakening", // scythe damage down
+            "Clumsy", // scythe speed down
+            "Near-Sighted", // scythe range down
+            "Frail", // health down
+            "Sluggish", // walk speed down
+            "Unlucky", // loot multiplier down
+            "Forgiven" // corruption down
+        };
+        positiveNouns = new List<string>()
+        {
+            "Elixir of Power", // scythe damage up
+            "Amulet of Control", // scythe speed up
+            "Tonic of Far Reach", // scythe range up
+            "Enchanted Armor", // health up
+            "Boots of Haste", // walk speed up
+            "Rabbit's Foot", // loot multiplier up
+            "Grimmoire" // corruption up
+        };
+        negativeNouns = new List<string>()
+        {
+            "Potion of Weakness", // scythe damage down
+            "Slippery Handle", // scythe speed down
+            "Burdened Blade", // scythe range down
+            "Poisoned Chalice", // health down
+            "Leaden Boots", // walk speed down
+            "Cracked Mirror", // loot multiplier down
+            "Holy Relic" // corruption down
+        };
+        StatAndPositiveAdjective = new Dictionary<GameStats.Stat, string>();
+        StatAndNegativeAdjective = new Dictionary<GameStats.Stat, string>();
+        StatAndPositiveNoun = new Dictionary<GameStats.Stat, string>();
+        StatAndNegativeNoun = new Dictionary<GameStats.Stat, string>();
+        for(int i = 0; i < Enum.GetValues(typeof(GameStats.Stat)).Length; i++)
+        {
+            // I know this is a horrendous way of doing this don't come for me 
+            StatAndPositiveAdjective.Add((GameStats.Stat)i, positiveAdjectives[i]);
+            StatAndNegativeAdjective.Add((GameStats.Stat)i, negativeAdjectives[i]);
+            StatAndPositiveNoun.Add((GameStats.Stat)i, positiveNouns[i]);
+            StatAndNegativeNoun.Add((GameStats.Stat)i, negativeNouns[i]);
+        }
     }
     
-
     public static MagicItem GenerateMagicItem()
     {
         MagicItem item = ScriptableObject.CreateInstance<MagicItem>();
 
         item.stats = ScriptableObject.CreateInstance<GameStats>();
-
         // buff stat
         item.buffedStat = GameStats.GetRandomStat();
         item.debuffedStat = GameStats.GetRandomStat();
@@ -59,8 +128,22 @@ public class MagicItem : ScriptableObject
         item.stats.SetStat(item.buffedStat, 1.4f); //Random.Range(1.1f, 1.5f));
         item.stats.SetStat(item.debuffedStat, 0.8f); //Random.Range(0.7f, 0.9f));
 
-        item.itemName = $"{LaneLibrary.RandomMethods.Choose(adjectives.ToArray())} {LaneLibrary.RandomMethods.Choose(nouns.ToArray())} of {item.buffedStat.ToString()}";
-
+        //item.itemName = $"{LaneLibrary.RandomMethods.Choose(adjectives.ToArray())} {LaneLibrary.RandomMethods.Choose(nouns.ToArray())} of {item.buffedStat.ToString()}";
+        var coinFlip =  new System.Random();
+        if(coinFlip.Next(0,1) == 0) // Positive Adjective + Negative Noun
+        {
+            StatAndPositiveAdjective.TryGetValue(item.buffedStat, out string positiveAdjective);
+            StatAndNegativeNoun.TryGetValue(item.debuffedStat, out string negativeNoun);
+            item.itemName = $"{positiveAdjective} {negativeNoun}";
+            Debug.Log(item.itemName);
+        }
+        else // Negative Adjective + Positive Noun
+        {
+            StatAndNegativeAdjective.TryGetValue(item.debuffedStat, out string negativeAdjective);
+            StatAndPositiveNoun.TryGetValue(item.buffedStat, out string positiveNoun);
+            item.itemName = $"{negativeAdjective} {positiveNoun}";
+            Debug.Log(item.itemName);
+        }
         return item;
     }
 }

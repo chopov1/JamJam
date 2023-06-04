@@ -8,15 +8,15 @@ public class GameStats : ScriptableObject
 {
     public enum Stat
     {
-        MeleeDamage = 0,
+        //MeleeDamage = 0,
         BoomerangeDamage,
         BoomerangSpeed,
         BoomerangRange,
         Health,
-        DamageResistance,
+        //DamageResistance,
         WalkSpeed,
         LootMultiplier,
-        Luck,
+        //Luck,
         Corruption
     }
 
