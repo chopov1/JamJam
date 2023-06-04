@@ -19,6 +19,8 @@ public class Scythe : MonoBehaviour
     AudioClip hitTest;
 
     AudioSource scytheSource;
+
+    GameObject scytheSprite;
     void Start()
     {
         
@@ -26,6 +28,7 @@ public class Scythe : MonoBehaviour
 
     private void Awake()
     {
+        scytheSprite = transform.GetChild(0).gameObject;
         goingOut = false;
         playerReference = FindObjectOfType<Player>();
         playerController = FindObjectOfType<PlayerController>();
@@ -47,7 +50,7 @@ public class Scythe : MonoBehaviour
         {
             speed = scytheRotationalSpeed;
         }
-        transform.Rotate(Vector3.forward, speed * Time.deltaTime, Space.Self);
+        scytheSprite.transform.Rotate(Vector3.forward, speed * Time.deltaTime, Space.Self);
     }
     void FixedUpdate()
     {
