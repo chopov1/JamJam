@@ -44,6 +44,7 @@ public class Scythe : MonoBehaviour
 
         playerController = FindObjectOfType<PlayerController>();
         scytheSource = GetComponent<AudioSource>();
+        scytheSource.volume = 0.7f;
     }
     void Update()
     {

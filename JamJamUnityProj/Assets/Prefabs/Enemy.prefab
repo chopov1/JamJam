@@ -598,7 +598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 108f2528aacb6ef4299ee7f8d612fffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSFX: []
+  deathSFX:
+  - {fileID: 8300000, guid: d23e052ebd27c3e408f81c0dcc781949, type: 3}
+  - {fileID: 8300000, guid: 49bbac12aab2b0547ac88b0e1bd8b96a, type: 3}
   state: 0
   speed: 5
   maxHealth: 100

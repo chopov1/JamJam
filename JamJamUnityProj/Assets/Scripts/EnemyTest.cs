@@ -19,6 +19,7 @@ public class EnemyTest : Mob
     protected override void Awake()
     {
         base.Awake();
+        mobAS.volume = 0.1f;
         healthBar = GetComponentInChildren<Slider>();
         health = maxHealth;
         SetHealthUI();
@@ -37,10 +38,11 @@ public class EnemyTest : Mob
                 transform.Translate(speed * Time.deltaTime * dir);
                 break;
             case MobState.dead:
+                playDeathSFX(0.5f);
                 enemyAnimator.animator.SetBool("IsDead", true);
                 healthBar.gameObject.SetActive(false);
-                StartCoroutine(deathRoutine());
                 state = MobState.inactive;
+                StartCoroutine(deathRoutine());
                 break;
             default: 
                 break;
@@ -110,5 +112,14 @@ public class EnemyTest : Mob
         yield return new WaitForSeconds(1.26f);
         enemyAnimator.animator.SetBool("IsDead", false);
         this.gameObject.SetActive(false);
+    }
+
+    protected override void playDeathSFX(float volumescale)
+    {
+        if (deathSFX.Count > 0)
+        {
+            mobAS.pitch = Random.Range(1, 1.3f);
+            mobAS.PlayOneShot(deathSFX[Random.Range(0, deathSFX.Count)], volumescale);
+        }
     }
 }

@@ -7,7 +7,7 @@ public class Mob : MonoBehaviour
 
     [SerializeField] protected List<AudioClip> deathSFX;
 
-    AudioSource mobAS;
+    protected AudioSource mobAS;
     public enum MobState {inactive,dead, alive}
     public MobState state;
 
@@ -44,11 +44,11 @@ public class Mob : MonoBehaviour
         
     }
 
-    protected void playDeathSFX()
+    protected virtual void playDeathSFX(float volumescale)
     {
         if(deathSFX.Count > 0)
         {
-            mobAS.PlayOneShot(deathSFX[Random.Range(0, deathSFX.Count)], 0.5f);
+            mobAS.PlayOneShot(deathSFX[Random.Range(0, deathSFX.Count)], volumescale);
         }
     }
 

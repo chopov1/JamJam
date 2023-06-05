@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
     
     private MobSpawner humanSpawner;
     private MobSpawner enemySpawner;
-    [SerializeField] private GameObject inBetweenCanvas, gameOverCanvas, hspawner;
+    [SerializeField] private GameObject inBetweenCanvas, gameOverCanvas, hspawner, waveNumberText;
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
     [SerializeField] float waveLength;
+    [SerializeField] public float waveLengthIncrease;
     public float waveTime;
     public int waveNumber;
     public float humanSpawnRateMultiplier;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         waveTime = waveLength;
         waveNumber = 1;
         endWaveText = inBetweenCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        waveNumberText.GetComponent<TextMeshProUGUI>().text = "Wave: " + waveNumber.ToString();
     }
 
     private void Awake()
@@ -104,8 +106,9 @@ public class GameManager : MonoBehaviour
         BeginWave.Invoke();
         inBetweenCanvas.SetActive(false);
         //playerController.enabled = true;
-        waveTime = waveLength;
         waveNumber++;
+        waveTime = waveLength + waveLengthIncrease * (waveNumber - 1);
+        waveNumberText.GetComponent<TextMeshProUGUI>().text = "Wave: " + waveNumber.ToString();
         humanSpawner.enabled = true;
         //enemySpawner.enabled = true;
         humanSpawner.spawnRate = humanSpawner.spawnRate * humanSpawnRateMultiplier;
