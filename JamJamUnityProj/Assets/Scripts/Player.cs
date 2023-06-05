@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public float baseEnemyDamage;
     public float defenseMulitplier;
 
+    public float luck = 5f;
+
     public GameStats baseStats;
     public GameStats currentStats;
 
@@ -123,6 +125,14 @@ public class Player : MonoBehaviour
     {
         playerAS.PlayOneShot(collectableSO.GetCollectableSFX(CollectableType.soul), 0.5f);
         soulsReaped++;
+
+        float r = UnityEngine.Random.Range(0, 100);
+
+        if (r <= (luck * currentStats.GetStat(Stat.Luck)))
+        {
+            // its ur lucky day
+            soulsReaped++;
+        }
     }
 
     public void CalculateStats()
