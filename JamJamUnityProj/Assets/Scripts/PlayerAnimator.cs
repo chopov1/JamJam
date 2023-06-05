@@ -46,4 +46,6 @@ public class PlayerAnimator : MonoBehaviour
     {
         spriteRenderer.flipX = !isFacingRight;
     }
+
+    
 }

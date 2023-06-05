@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Human : Mob
 {
+    
     //private Player playerReference;
     private Collider2D hitbox;
     //private Vector3 playerPos;
@@ -14,9 +15,14 @@ public class Human : Mob
     private Rigidbody2D rb;
     private PlayerAnimator humanAnimator;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        hitbox = GetComponent<Collider2D>();
+    }
     void Start()
     {
-        hitbox = GetComponent<Collider2D>();
+        
         rb = GetComponent<Rigidbody2D>();
         humanAnimator = GetComponentInChildren<PlayerAnimator>();
         //playerReference = FindObjectOfType<Player>();
@@ -24,14 +30,42 @@ public class Human : Mob
 
     private void Update()
     {
-        if (playerToClose())
+        switch (state)
         {
-            moveAwayFromPlayer();
+            case MobState.alive:
+                if (playerToClose())
+                {
+                    moveAwayFromPlayer();
+                }
+                break;
+            case MobState.dead:
+                playDeathSFX();
+                humanAnimator.animator.SetBool("IsDead", true);
+                DropSoul();
+                hitbox.enabled = false;
+                //this.gameObject.SetActive(false);
+                StartCoroutine(deathRoutine());
+                Reset();
+                state = MobState.inactive;
+                break;
+            default:
+                break;
         }
+        
     }
+
+    public override void ActivateMob()
+    {
+        state = MobState.alive;
+        hitbox.enabled = true;
+    }
+
     void FixedUpdate()
     {
-        UpdateAnimationValues();
+        if(state == MobState.alive)
+        {
+            UpdateAnimationValues();
+        }
     }
 
     bool playerToClose()
@@ -53,9 +87,7 @@ public class Human : Mob
     {
         if (collider.gameObject.tag == "PlayerWeapon")
         {
-            DropSoul();
-            this.gameObject.SetActive(false);
-            Reset();
+            state = MobState.dead;
         }
     }
 
@@ -86,5 +118,12 @@ public class Human : Mob
         }
         //humanAnimator.UpdateMoveBool(speed * Time.deltaTime * dir);
         humanAnimator.UpdateMoveBool(playerToClose());
+    }
+
+    IEnumerator deathRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        humanAnimator.animator.SetBool("IsDead", false);
+        this.gameObject.SetActive(false);
     }
 }

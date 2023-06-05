@@ -16,8 +16,9 @@ public class EnemyTest : Mob
 
     Slider healthBar;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         healthBar = GetComponentInChildren<Slider>();
         health = maxHealth;
         SetHealthUI();
@@ -29,12 +30,29 @@ public class EnemyTest : Mob
     }
     void Update()
     {
-        dir = (playerPosition - transform.position).normalized;
-        transform.Translate(speed * Time.deltaTime * dir);
+        switch (state)
+        {
+            case MobState.alive:
+                dir = (playerPosition - transform.position).normalized;
+                transform.Translate(speed * Time.deltaTime * dir);
+                break;
+            case MobState.dead:
+                enemyAnimator.animator.SetBool("IsDead", true);
+                healthBar.gameObject.SetActive(false);
+                StartCoroutine(deathRoutine());
+                state = MobState.inactive;
+                break;
+            default: 
+                break;
+        }
+        
     }
     void FixedUpdate()
     {
-        UpdateAnimationValues();
+        if(state == MobState.alive)
+        {
+            UpdateAnimationValues();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collider)
@@ -58,9 +76,8 @@ public class EnemyTest : Mob
 
     void mobDeath()
     {
-        this.gameObject.SetActive(false);
-        health = maxHealth;
-        SetHealthUI();
+        state = MobState.dead;
+        
     }
 
     void SetHealthUI()
@@ -78,5 +95,20 @@ public class EnemyTest : Mob
             enemyAnimator.UpdateForwardBool(dir.y < 0);
         }
         enemyAnimator.UpdateMoveBool(true);
+    }
+
+    public override void ActivateMob()
+    {
+        base.ActivateMob();
+        healthBar.gameObject.SetActive(true);
+        health = maxHealth;
+        SetHealthUI();
+    }
+
+    IEnumerator deathRoutine()
+    {
+        yield return new WaitForSeconds(1.26f);
+        enemyAnimator.animator.SetBool("IsDead", false);
+        this.gameObject.SetActive(false);
     }
 }

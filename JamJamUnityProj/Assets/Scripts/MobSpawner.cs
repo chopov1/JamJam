@@ -95,6 +95,7 @@ public class MobSpawner : MonoBehaviour
             GameObject mob = mobPool.Dequeue();
             mob.transform.position = getSpawnPoint();
             mob.SetActive(true);
+            mob.GetComponent<Mob>().ActivateMob();
             mobPool.Enqueue(mob);
         }
     }

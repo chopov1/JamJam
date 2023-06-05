@@ -4,8 +4,27 @@ using UnityEngine;
 
 public class Mob : MonoBehaviour
 {
+
+    [SerializeField] protected List<AudioClip> deathSFX;
+
+    AudioSource mobAS;
+    public enum MobState {inactive,dead, alive}
+    public MobState state;
+
+    
     protected Player playerReference;
     protected Vector3 playerPosition;
+
+    protected virtual void Awake()
+    {
+       setupAudio();
+    }
+
+    protected void setupAudio()
+    {
+        mobAS = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         playerReference = FindObjectOfType<Player>();
@@ -18,4 +37,19 @@ public class Mob : MonoBehaviour
     {
         playerPosition = pos;
     }
+
+    public virtual void ActivateMob()
+    {
+        state = MobState.alive;
+        
+    }
+
+    protected void playDeathSFX()
+    {
+        if(deathSFX.Count > 0)
+        {
+            mobAS.PlayOneShot(deathSFX[Random.Range(0, deathSFX.Count)], 0.5f);
+        }
+    }
+
 }
