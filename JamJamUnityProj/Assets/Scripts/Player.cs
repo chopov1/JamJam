@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     #region Upgradable Skills
     public float maxHealth;
+    private float baseMaxHealth;
     public float movementSpeed;
     public float throwMaxDistance;
     public float baseEnemyDamage;
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
         magicItems = new List<MagicItem>();
 
         //MagicItem item = MagicItem.GenerateMagicItem();
+
+        baseMaxHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -133,6 +136,8 @@ public class Player : MonoBehaviour
             //Debug.Log($"Set {stat} = {result}");
             currentStats.SetStat(stat, result);
         }
+
+        maxHealth = baseMaxHealth * currentStats.GetStat(Stat.Health);
     }
 
     public void AddItem(MagicItem item)
