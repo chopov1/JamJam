@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     {
         playerAS = GetComponent<AudioSource>();
         healthBar.maxValue = maxHealth;
+        SetHealth();
     }
 
     void Start()
@@ -150,6 +151,7 @@ public class Player : MonoBehaviour
         }
 
         maxHealth = baseMaxHealth * currentStats.GetStat(Stat.Health);
+        healthBar.maxValue = maxHealth;
         scythe.UpdateScytheStats();
         
     }

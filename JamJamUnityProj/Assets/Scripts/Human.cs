@@ -39,7 +39,7 @@ public class Human : Mob
                 }
                 break;
             case MobState.dead:
-                playDeathSFX();
+                playDeathSFX(0.5f);
                 humanAnimator.animator.SetBool("IsDead", true);
                 DropSoul();
                 hitbox.enabled = false;
