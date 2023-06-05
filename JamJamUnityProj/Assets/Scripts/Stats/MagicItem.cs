@@ -32,7 +32,7 @@ public class MagicItem : ScriptableObject
     static List<string> adjectives;
     static List<string> nouns;
 
-
+    static ItemIcons icons;
     static MagicItem()
     {
         // adjectives = new List<string>()
@@ -110,6 +110,8 @@ public class MagicItem : ScriptableObject
             StatAndPositiveNoun.Add((GameStats.Stat)i, positiveNouns[i]);
             StatAndNegativeNoun.Add((GameStats.Stat)i, negativeNouns[i]);
         }
+
+        icons = Resources.Load<ItemIcons>("MagicItemIcons");
     }
     
     public static MagicItem GenerateMagicItem()
@@ -136,14 +138,16 @@ public class MagicItem : ScriptableObject
             StatAndPositiveAdjective.TryGetValue(item.buffedStat, out string positiveAdjective);
             StatAndNegativeNoun.TryGetValue(item.debuffedStat, out string negativeNoun);
             item.itemName = $"{positiveAdjective} {negativeNoun}";
-            Debug.Log(item.itemName);
+            item.icon = icons.negativeNouns[(int)item.debuffedStat];
+            //Debug.Log(item.itemName);
         }
         else // Negative Adjective + Positive Noun
         {
             StatAndNegativeAdjective.TryGetValue(item.debuffedStat, out string negativeAdjective);
             StatAndPositiveNoun.TryGetValue(item.buffedStat, out string positiveNoun);
             item.itemName = $"{negativeAdjective} {positiveNoun}";
-            Debug.Log(item.itemName);
+            item.icon = icons.positiveNouns[(int)item.buffedStat];
+            //Debug.Log(item.itemName);
         }
         return item;
     }

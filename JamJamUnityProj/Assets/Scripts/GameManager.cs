@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     
     private MobSpawner humanSpawner;
-    [SerializeField] private GameObject inBetweenCanvas, hspawner;
+    private MobSpawner enemySpawner;
+    [SerializeField] private GameObject inBetweenCanvas, gameOverCanvas, hspawner;
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
     [SerializeField] float waveLength;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI endWaveText;
     void Start()
     {
+        Time.timeScale = 1;
         playerReference = FindObjectOfType<Player>();
         playerController = FindObjectOfType<PlayerController>();
         waveTime = waveLength;
@@ -70,23 +72,23 @@ public class GameManager : MonoBehaviour
     }
     public void EndCurrentWave()
     {
+        Time.timeScale = 0;
         EndWave.Invoke();
         humanSpawner.ResetSpawner();
         humanSpawner.enabled = false;
-        inBetweenCanvas.SetActive(true);
         switch (playerReference.State)
         {
             case Player.PlayerState.alive:
                 //sets the win image color to true
+                inBetweenCanvas.SetActive(true);
                 inBetweenCanvas.transform.GetChild(0).gameObject.SetActive(false);
                 inBetweenCanvas.transform.GetChild(1).gameObject.SetActive(true);
                 endWaveText.text = "Wave Complete, purchase upgrades with the souls harvested from humans.";
                 break;
             case Player.PlayerState.dead:
                 //sets the red image to true
-                inBetweenCanvas.transform.GetChild(0).gameObject.SetActive(true);
-                inBetweenCanvas.transform.GetChild(1).gameObject.SetActive(false);
-                endWaveText.text = "Wave Failed, you have been sent back down to the depths of hell.";
+                // 
+                gameOverCanvas.SetActive(true);
                 break;
         }
         //playerController.enabled = false;
@@ -98,6 +100,7 @@ public class GameManager : MonoBehaviour
     public void StartNextWave()
     {
         //set player alive again
+        Time.timeScale = 1;
         playerReference.ResetPlayer();
         BeginWave.Invoke();
         inBetweenCanvas.SetActive(false);

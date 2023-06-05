@@ -13,14 +13,11 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D playerRigidbody;
     public float walkSpeed = 10f;
-
-    //[SerializeField] float speed;
     [SerializeField] float rotationalSpeed;
 
     public GameObject WeaponPrefab;
     public GameObject Weapon;
     public GameObject aimArrow;
-    Boomerang boomerangScript;
     [SerializeField] private Scythe scythe;
     public bool hasWeapon;
 
@@ -34,9 +31,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerReference = GetComponent<Player>();
-        //temp code for making the boomerang. could do object pooling or something else if we want multiple in the future doesnt have to be a prefab
         Weapon = Instantiate(WeaponPrefab);
-        boomerangScript = Weapon.GetComponent<Boomerang>();
         Weapon.SetActive(false);
 
         hasWeapon = true;
@@ -80,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * playerReference.currentStats.GetStat(GameStats.Stat.WalkSpeed) * Time.deltaTime, moveDirection.y * walkSpeed * Time.deltaTime);
+        playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * playerReference.currentStats.GetStat(GameStats.Stat.WalkSpeed) * Time.deltaTime, moveDirection.y * walkSpeed * playerReference.currentStats.GetStat(GameStats.Stat.WalkSpeed) * Time.deltaTime);
     }
 
     void Aim(Vector2 aimInput)
@@ -95,28 +90,19 @@ public class PlayerController : MonoBehaviour
     {
         if(hasWeapon)
         {
-            // Uncomment this block to switch back to the boomerang script
-
-            // Weapon.SetActive(true);
-            // Weapon.transform.position = this.transform.position;
-            // //boomerangScript.SetPlayerPos(transform.position, aimDirection);
-            // boomerangScript.SetEndPosition(aimDirection);
             hasWeapon = false;
             scythe.gameObject.SetActive(true);
             scythe.SetScytheDirection(aimDirection);
             scythe.gameObject.transform.parent = this.transform.parent;
-            //aimArrow.gameObject.transform.parent = scythe.transform;
             scythe.goingOut = true;
         }
     }
-    void OnThrow() // This still isn't calling and idk why, it's not a problem atm but if we want continous scythe control it will be
+    void OnThrow() 
     {
         scythe.SetScytheDirection(aimDirection);
     }
     void Recall(InputAction.CallbackContext ctx)
     {
-        // aimArrow.gameObject.transform.parent = this.transform;
-        // aimArrow.transform.position = Vector3.zero;
         scythe.transform.parent = this.transform;
         scythe.goingOut = false;
     }
