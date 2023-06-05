@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MagicItem : ScriptableObject
 {
-    public Image icon;
+    public Sprite icon;
     public string itemName;
     public GameStats stats;
     public GameStats.Stat buffedStat;
