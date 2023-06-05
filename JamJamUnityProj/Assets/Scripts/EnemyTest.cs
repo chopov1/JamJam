@@ -34,7 +34,7 @@ public class EnemyTest : Mob
     }
     void FixedUpdate()
     {
-
+        UpdateAnimationValues();
     }
 
     private void OnTriggerStay2D(Collider2D collider)

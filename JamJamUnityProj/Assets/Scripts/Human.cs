@@ -10,19 +10,17 @@ public class Human : Mob
     [SerializeField] float speed;
     [SerializeField] GameObject soulPrefab;
     [SerializeField] int NumberOfSoulsToDrop, runDistance;
+    private Vector2 dir;
+    private Rigidbody2D rb;
+    private PlayerAnimator humanAnimator;
 
     void Start()
     {
         hitbox = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        humanAnimator = GetComponentInChildren<PlayerAnimator>();
         //playerReference = FindObjectOfType<Player>();
     }
-
-    private void Awake()
-    {
-        
-    }
-
-
 
     private void Update()
     {
@@ -30,6 +28,10 @@ public class Human : Mob
         {
             moveAwayFromPlayer();
         }
+    }
+    void FixedUpdate()
+    {
+        UpdateAnimationValues();
     }
 
     bool playerToClose()
@@ -43,8 +45,7 @@ public class Human : Mob
 
     void moveAwayFromPlayer()
     {
-        //playerPosition = playerReference.transform.position;
-        Vector2 dir = (transform.position - playerPosition).normalized;
+        dir = (transform.position - playerPosition).normalized;
         transform.Translate(dir * speed * Time.deltaTime);
     }
 
@@ -72,5 +73,17 @@ public class Human : Mob
     void Reset()
     {
         // reseting variables upon returning to pool
+    }
+    private void UpdateAnimationValues()
+    {
+        if (dir.x != 0)
+        {
+            humanAnimator.UpdateFacingDirection(dir.x > 0);
+        }
+        if (dir.y != 0)
+        {
+            humanAnimator.UpdateForwardBool(dir.y < 0);
+        }
+        humanAnimator.UpdateMoveBool(rb.velocity);
     }
 }
