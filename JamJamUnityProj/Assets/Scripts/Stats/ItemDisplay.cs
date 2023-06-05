@@ -37,4 +37,5 @@ $@"+{Mathf.Floor((item.stats.GetStat(item.buffedStat) - 1) * 100)}% {item.buffed
 -{Mathf.Floor((1 - item.stats.GetStat(item.debuffedStat)) * 100)}% {item.debuffedStat}";
 
     }
+
 }
