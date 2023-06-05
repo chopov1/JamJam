@@ -12,6 +12,7 @@ public class MagicItem : ScriptableObject
     public GameStats stats;
     public GameStats.Stat buffedStat;
     public GameStats.Stat debuffedStat;
+    public int price;
 
     #region Ricky's Stuff
     public Dictionary<string, string> itemAdjectives;
@@ -128,9 +129,9 @@ public class MagicItem : ScriptableObject
         item.stats.SetStat(item.buffedStat, UnityEngine.Random.Range(1.1f, 1.5f));
         item.stats.SetStat(item.debuffedStat, UnityEngine.Random.Range(0.7f, 0.9f));
 
-        //item.itemName = $"{LaneLibrary.RandomMethods.Choose(adjectives.ToArray())} {LaneLibrary.RandomMethods.Choose(nouns.ToArray())} of {item.buffedStat.ToString()}";
-        var coinFlip =  new System.Random();
-        if(coinFlip.Next(0,1) == 0) // Positive Adjective + Negative Noun
+        item.price = Mathf.CeilToInt(5 * item.stats.GetStat(item.buffedStat));
+        
+        if(LaneLibrary.RandomMethods.RANDOM.Next(0,1) == 0) // Positive Adjective + Negative Noun
         {
             StatAndPositiveAdjective.TryGetValue(item.buffedStat, out string positiveAdjective);
             StatAndNegativeNoun.TryGetValue(item.debuffedStat, out string negativeNoun);

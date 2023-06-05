@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameStats;
 
 [RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
@@ -19,7 +21,9 @@ public class Player : MonoBehaviour
     public float defenseMulitplier;
 
     public GameStats baseStats;
-    public GameStats runStats;
+    public GameStats currentStats;
+
+    public List<MagicItem> magicItems;
     #endregion
 
     public int soulsReaped;
@@ -45,7 +49,9 @@ public class Player : MonoBehaviour
         soulsReaped = 0;
 
         baseStats = ScriptableObject.CreateInstance<GameStats>();
-        runStats = ScriptableObject.CreateInstance<GameStats>();
+        currentStats = ScriptableObject.CreateInstance<GameStats>();
+
+        magicItems = new List<MagicItem>();
 
         //MagicItem item = MagicItem.GenerateMagicItem();
     }
@@ -112,5 +118,35 @@ public class Player : MonoBehaviour
     {
         playerAS.PlayOneShot(collectableSO.GetCollectableSFX(CollectableType.soul), 0.5f);
         soulsReaped++;
+    }
+
+    public void CalculateStats()
+    {
+        foreach (Stat stat in Enum.GetValues(typeof(Stat)))
+        {
+            float result = baseStats.GetStat(stat);
+
+            foreach (MagicItem m in magicItems)
+            {
+                result *= m.stats.GetStat(stat);
+            }
+            //Debug.Log($"Set {stat} = {result}");
+            currentStats.SetStat(stat, result);
+        }
+    }
+
+    public void AddItem(MagicItem item)
+    {
+        magicItems.Add(item);
+        CalculateStats();
+    }
+
+    public void AddItem(ItemDisplay itemDisplay)
+    {
+        if (soulsReaped >= itemDisplay.item.price)
+        {
+            soulsReaped -= itemDisplay.item.price;
+            AddItem(itemDisplay.item);
+        }
     }
 }

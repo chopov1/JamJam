@@ -36,5 +36,7 @@ public class ItemDisplay : MonoBehaviour
 $@"+{Mathf.Floor((item.stats.GetStat(item.buffedStat) - 1) * 100)}% {item.buffedStat}
 -{Mathf.Floor((1 - item.stats.GetStat(item.debuffedStat)) * 100)}% {item.debuffedStat}";
 
+        buttonText.text = $"Purchase ({item.price} souls)";
     }
+
 }
