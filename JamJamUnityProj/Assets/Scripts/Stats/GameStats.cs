@@ -9,11 +9,11 @@ public class GameStats : ScriptableObject
     public enum Stat
     {
         ScytheDamage,
-        ScytheSpeed,
-        ScytheRange,
+        ScytheSpeed,//
+        ScytheRange,//
         Health, //
         WalkSpeed, //
-        LootMultiplier,
+        Luck,
         Corruption
     }
 

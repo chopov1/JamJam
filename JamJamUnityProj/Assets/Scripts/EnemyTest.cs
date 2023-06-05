@@ -30,7 +30,7 @@ public class EnemyTest : Mob
     void Update()
     {
         dir = (playerPosition - transform.position).normalized;
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * dir);
     }
     void FixedUpdate()
     {
@@ -76,6 +76,6 @@ public class EnemyTest : Mob
         {
             enemyAnimator.UpdateForwardBool(dir.y < 0);
         }
-        enemyAnimator.UpdateMoveBool(rb.velocity);
+        enemyAnimator.UpdateMoveBool(dir);
     }
 }
