@@ -13,6 +13,9 @@ public class Scythe : MonoBehaviour
     private float baseScytheSpeed;
     private float baseScytheDistance;
 
+    public float scytheDamage;
+    private float baseScytheDamage;
+
     public bool goingOut;
     public Vector3 targetPosition;
     private Vector3 throwDirection;
@@ -29,6 +32,7 @@ public class Scythe : MonoBehaviour
     {
         baseScytheSpeed = scytheSpeed;
         baseScytheDistance = scytheDistance;
+        baseScytheDamage = scytheDamage;
     }
 
     private void Awake()

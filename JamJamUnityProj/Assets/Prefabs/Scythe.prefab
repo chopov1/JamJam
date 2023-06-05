@@ -135,6 +135,7 @@ MonoBehaviour:
   scytheSpeed: 0.25
   scytheDistance: 10
   scytheRotationalSpeed: 1000
+  scytheDamage: 9
   goingOut: 0
   targetPosition: {x: 0, y: 0, z: 0}
   hitTest: {fileID: 8300000, guid: ada823eba1af8a7429340bbc356e2a2b, type: 3}

@@ -171,7 +171,7 @@ MonoBehaviour:
   speed: 3
   soulPrefab: {fileID: 1728982936873506348, guid: b3475af27e6ae4142b332539126a7897, type: 3}
   NumberOfSoulsToDrop: 3
-  runDistance: 8
+  runDistance: 5
 --- !u!61 &-4215485441329693245
 BoxCollider2D:
   m_ObjectHideFlags: 0
