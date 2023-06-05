@@ -125,8 +125,8 @@ public class MagicItem : ScriptableObject
             item.debuffedStat = GameStats.GetRandomStat();
         }
 
-        item.stats.SetStat(item.buffedStat, 1.4f); //Random.Range(1.1f, 1.5f));
-        item.stats.SetStat(item.debuffedStat, 0.8f); //Random.Range(0.7f, 0.9f));
+        item.stats.SetStat(item.buffedStat, UnityEngine.Random.Range(1.1f, 1.5f));
+        item.stats.SetStat(item.debuffedStat, UnityEngine.Random.Range(0.7f, 0.9f));
 
         //item.itemName = $"{LaneLibrary.RandomMethods.Choose(adjectives.ToArray())} {LaneLibrary.RandomMethods.Choose(nouns.ToArray())} of {item.buffedStat.ToString()}";
         var coinFlip =  new System.Random();

@@ -24,7 +24,7 @@ public class MusicManager : MonoBehaviour
     public void PlayMusic()
     {
         //playing around with shit, eventually Ill match music to timer or vis versa so clips end as round ends and trigger when player starts round
-        musicAS.volume = 0.5f;
+        musicAS.volume = 0.2f;
         musicAS.pitch = 0.8f;
         musicAS.clip = level1Music;
         musicAS.Play();
