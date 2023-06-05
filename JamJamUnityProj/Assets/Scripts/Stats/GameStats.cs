@@ -13,7 +13,7 @@ public class GameStats : ScriptableObject
         ScytheRange,
         Health, //
         WalkSpeed, //
-        LootMultiplier,
+        Luck,
         Corruption
     }
 
