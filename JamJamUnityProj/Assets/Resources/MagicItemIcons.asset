@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6963cace7ec1dbe438bbbe96c7237e11, type: 3}
+  m_Name: MagicItemIcons
+  m_EditorClassIdentifier: 
+  positiveNouns:
+  - {fileID: 21300000, guid: 06879e5e38610d748913d0b3d004471b, type: 3}
+  - {fileID: 21300000, guid: 000f99f73b2bff64baac4cf278ad796b, type: 3}
+  - {fileID: 21300000, guid: 140ba75ca7992834c96929857766e292, type: 3}
+  - {fileID: 21300000, guid: 07d8717d01e3ba24ab2cc78919a6f81e, type: 3}
+  - {fileID: 21300000, guid: 9da12ace564821e4bbc532febb6ab49b, type: 3}
+  - {fileID: 21300000, guid: 87a16b5ad92afc144b7f176e08e13a2d, type: 3}
+  - {fileID: 21300000, guid: 0a9e0b75818650443af140cebe000e82, type: 3}
+  negativeNouns:
+  - {fileID: 21300000, guid: 04f664f7a662244439b34ef8315eda37, type: 3}
+  - {fileID: 21300000, guid: 7963abb6e3be50540920642a277d3fe2, type: 3}
+  - {fileID: 21300000, guid: 5b23f1114b584984e9c4bdbdababdf1e, type: 3}
+  - {fileID: 21300000, guid: fb29ac64c5c9d24499f109bef511f3eb, type: 3}
+  - {fileID: 21300000, guid: 8b59c3c56eaa7d64fa58a9195f894d32, type: 3}
+  - {fileID: 21300000, guid: 6ec81ed1de8eed1438ed286950aed654, type: 3}
+  - {fileID: 21300000, guid: c1dd4027d6e2909429256c0b54157dd4, type: 3}
