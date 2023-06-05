@@ -143,6 +143,10 @@ public class Player : MonoBehaviour
 
     public void AddItem(ItemDisplay itemDisplay)
     {
-        AddItem(itemDisplay.item);
+        if (soulsReaped >= itemDisplay.item.price)
+        {
+            soulsReaped -= itemDisplay.item.price;
+            AddItem(itemDisplay.item);
+        }
     }
 }
