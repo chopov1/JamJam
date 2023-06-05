@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * Time.deltaTime, moveDirection.y * walkSpeed * Time.deltaTime);
+        playerRigidbody.velocity = new Vector2(moveDirection.x * walkSpeed * playerReference.currentStats.GetStat(GameStats.Stat.WalkSpeed) * Time.deltaTime, moveDirection.y * walkSpeed * Time.deltaTime);
     }
 
     void Aim(Vector2 aimInput)

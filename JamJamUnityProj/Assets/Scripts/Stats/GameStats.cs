@@ -11,8 +11,8 @@ public class GameStats : ScriptableObject
         ScytheDamage,
         ScytheSpeed,
         ScytheRange,
-        Health,
-        WalkSpeed,
+        Health, //
+        WalkSpeed, //
         LootMultiplier,
         Corruption
     }
