@@ -10,6 +10,9 @@ public class EnemyTest : Mob
 
     float health;
     public float basePlayerDmg;
+    private PlayerAnimator enemyAnimator;
+    private Rigidbody2D rb;
+    private Vector2 dir;
 
     Slider healthBar;
 
@@ -19,10 +22,19 @@ public class EnemyTest : Mob
         health = maxHealth;
         SetHealthUI();
     }
+    void Start()
+    {
+        enemyAnimator = GetComponentInChildren<PlayerAnimator>();
+        rb = GetComponent<Rigidbody2D>();
+    }
     void Update()
     {
-        Vector2 dir = (playerPosition - transform.position).normalized;
+        dir = (playerPosition - transform.position).normalized;
         transform.Translate(dir * speed * Time.deltaTime);
+    }
+    void FixedUpdate()
+    {
+
     }
 
     private void OnTriggerStay2D(Collider2D collider)
@@ -53,5 +65,17 @@ public class EnemyTest : Mob
     void SetHealthUI()
     {
         healthBar.value = health;
+    }
+    private void UpdateAnimationValues()
+    {
+        if (dir.x != 0)
+        {
+            enemyAnimator.UpdateFacingDirection(dir.x > 0);
+        }
+        if (dir.y != 0)
+        {
+            enemyAnimator.UpdateForwardBool(dir.y < 0);
+        }
+        enemyAnimator.UpdateMoveBool(rb.velocity);
     }
 }
