@@ -129,9 +129,9 @@ public class MagicItem : ScriptableObject
         item.stats.SetStat(item.buffedStat, UnityEngine.Random.Range(1.1f, 1.5f));
         item.stats.SetStat(item.debuffedStat, UnityEngine.Random.Range(0.7f, 0.9f));
 
-        item.price = Mathf.CeilToInt(5 * item.stats.GetStat(item.buffedStat));
+        item.price = Mathf.RoundToInt(7 * item.stats.GetStat(item.buffedStat));
         
-        if(LaneLibrary.RandomMethods.RANDOM.Next(0,1) == 0) // Positive Adjective + Negative Noun
+        if(LaneLibrary.RandomMethods.RANDOM.Next(0,2) == 0) // Positive Adjective + Negative Noun
         {
             StatAndPositiveAdjective.TryGetValue(item.buffedStat, out string positiveAdjective);
             StatAndNegativeNoun.TryGetValue(item.debuffedStat, out string negativeNoun);
