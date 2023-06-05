@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     Slider healthBar;
 
+    public Scythe scythe;
+
     private void Awake()
     {
         playerAS = GetComponent<AudioSource>();
@@ -138,6 +140,8 @@ public class Player : MonoBehaviour
         }
 
         maxHealth = baseMaxHealth * currentStats.GetStat(Stat.Health);
+        scythe.UpdateScytheStats();
+        
     }
 
     public void AddItem(MagicItem item)

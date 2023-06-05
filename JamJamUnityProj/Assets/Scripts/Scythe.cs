@@ -9,6 +9,10 @@ public class Scythe : MonoBehaviour
     [SerializeField] private float scytheSpeed;
     [SerializeField] private float scytheDistance;
     [SerializeField] private float scytheRotationalSpeed;
+
+    private float baseScytheSpeed;
+    private float baseScytheDistance;
+
     public bool goingOut;
     public Vector3 targetPosition;
     private Vector3 throwDirection;
@@ -23,7 +27,8 @@ public class Scythe : MonoBehaviour
     GameObject scytheSprite;
     void Start()
     {
-        
+        baseScytheSpeed = scytheSpeed;
+        baseScytheDistance = scytheDistance;
     }
 
     private void Awake()
@@ -31,6 +36,8 @@ public class Scythe : MonoBehaviour
         scytheSprite = transform.GetChild(0).gameObject;
         goingOut = false;
         playerReference = FindObjectOfType<Player>();
+        playerReference.scythe = this;
+
         playerController = FindObjectOfType<PlayerController>();
         scytheSource = GetComponent<AudioSource>();
     }
@@ -96,5 +103,11 @@ public class Scythe : MonoBehaviour
         //could maybe handle this in the sfx for what the scythe is hitting, but for now im gonna keep a general sound around lol. Could help things sound consistent without baking it into asset, allows for modularity.
         scytheSource.pitch = Random.Range(0.7f, 1.3f);
         scytheSource.PlayOneShot(hitTest);
+    }
+
+    public void UpdateScytheStats()
+    {
+        scytheSpeed = baseScytheSpeed * playerReference.currentStats.GetStat(GameStats.Stat.ScytheSpeed);
+        scytheDistance = baseScytheDistance * playerReference.currentStats.GetStat(GameStats.Stat.ScytheRange);
     }
 }
