@@ -46,7 +46,7 @@ public class Human : Mob
     void moveAwayFromPlayer()
     {
         dir = (transform.position - playerPosition).normalized;
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * dir);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -84,6 +84,7 @@ public class Human : Mob
         {
             humanAnimator.UpdateForwardBool(dir.y < 0);
         }
-        humanAnimator.UpdateMoveBool(rb.velocity);
+        //humanAnimator.UpdateMoveBool(speed * Time.deltaTime * dir);
+        humanAnimator.UpdateMoveBool(playerToClose());
     }
 }

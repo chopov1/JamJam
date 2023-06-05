@@ -8,7 +8,7 @@ public class GameStats : ScriptableObject
 {
     public enum Stat
     {
-        ScytheDamage,
+        ScytheDamage,//
         ScytheSpeed,//
         ScytheRange,//
         Health, //

@@ -32,6 +32,11 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(animatorMovingBool, isMoving);
     }
 
+    public void UpdateMoveBool(bool isMoving)
+    {
+        animator.SetBool(animatorMovingBool, isMoving);
+    }
+
     public void UpdateForwardBool(bool isFacingForward)
     {
         animator.SetBool(animatorForwardBool, isFacingForward);

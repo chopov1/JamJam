@@ -41,7 +41,8 @@ public class EnemyTest : Mob
     {
         if (collider.gameObject.tag == "PlayerWeapon")
         {
-            HurtMob(basePlayerDmg);
+            Scythe scythe = collider.GetComponent<Scythe>();
+            HurtMob(scythe.scytheDamage);
             if (health <= 0)
             {
                 mobDeath();
@@ -76,6 +77,6 @@ public class EnemyTest : Mob
         {
             enemyAnimator.UpdateForwardBool(dir.y < 0);
         }
-        enemyAnimator.UpdateMoveBool(dir);
+        enemyAnimator.UpdateMoveBool(true);
     }
 }
