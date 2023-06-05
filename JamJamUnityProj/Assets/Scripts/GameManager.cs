@@ -1,5 +1,7 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,8 +11,7 @@ public class GameManager : MonoBehaviour
     private PlayerController playerController;
     
     private MobSpawner humanSpawner;
-    //private MobSpawner enemySpawner;
-    [SerializeField] private GameObject inBetweenCanvas, hspawner;//espawner;
+    [SerializeField] private GameObject inBetweenCanvas, hspawner;
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
     [SerializeField] float waveLength;
@@ -21,18 +22,20 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent BeginWave;
     public UnityEvent EndWave;
+
+    TextMeshProUGUI endWaveText;
     void Start()
     {
         playerReference = FindObjectOfType<Player>();
         playerController = FindObjectOfType<PlayerController>();
         waveTime = waveLength;
         waveNumber = 1;
+        endWaveText = inBetweenCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
 
     private void Awake()
     {
         humanSpawner = hspawner.GetComponent<MobSpawner>();
-        //enemySpawner = espawner.GetComponent<MobSpawner>();
     }
 
     void Update()
@@ -69,10 +72,23 @@ public class GameManager : MonoBehaviour
     {
         EndWave.Invoke();
         humanSpawner.ResetSpawner();
-        //enemySpawner.ResetSpawner();
         humanSpawner.enabled = false;
-        //enemySpawner.enabled = false;
         inBetweenCanvas.SetActive(true);
+        switch (playerReference.State)
+        {
+            case Player.PlayerState.alive:
+                //sets the win image color to true
+                inBetweenCanvas.transform.GetChild(0).gameObject.SetActive(false);
+                inBetweenCanvas.transform.GetChild(1).gameObject.SetActive(true);
+                endWaveText.text = "Wave Complete, purchase upgrades with the souls harvested from humans.";
+                break;
+            case Player.PlayerState.dead:
+                //sets the red image to true
+                inBetweenCanvas.transform.GetChild(0).gameObject.SetActive(true);
+                inBetweenCanvas.transform.GetChild(1).gameObject.SetActive(false);
+                endWaveText.text = "Wave Failed, you have been sent back down to the depths of hell.";
+                break;
+        }
         //playerController.enabled = false;
     }
     public void EndRun()
@@ -81,7 +97,6 @@ public class GameManager : MonoBehaviour
     }
     public void StartNextWave()
     {
-        
         //set player alive again
         playerReference.ResetPlayer();
         BeginWave.Invoke();
