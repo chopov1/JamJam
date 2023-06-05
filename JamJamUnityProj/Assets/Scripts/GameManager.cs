@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int totalSouls;
     [Tooltip("waveLength is counted in total seconds")]
     [SerializeField] float waveLength;
+    [SerializeField] public float waveLengthIncrease;
     public float waveTime;
     public int waveNumber;
     public float humanSpawnRateMultiplier;
@@ -105,8 +106,8 @@ public class GameManager : MonoBehaviour
         BeginWave.Invoke();
         inBetweenCanvas.SetActive(false);
         //playerController.enabled = true;
-        waveTime = waveLength;
         waveNumber++;
+        waveTime = waveLength + waveLengthIncrease * (waveNumber - 1);
         waveNumberText.GetComponent<TextMeshProUGUI>().text = "Wave: " + waveNumber.ToString();
         humanSpawner.enabled = true;
         //enemySpawner.enabled = true;

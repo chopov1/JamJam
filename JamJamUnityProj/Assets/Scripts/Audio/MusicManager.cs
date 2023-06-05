@@ -11,10 +11,12 @@ public class MusicManager : MonoBehaviour
     AudioClip level1Music;
 
     AudioSource musicAS;
+    private GameManager gameManager;
 
     private void Awake()
     {
         musicAS = GetComponent<AudioSource>();
+        gameManager = FindObjectOfType<GameManager>();
     }
     void Start()
     {
@@ -25,7 +27,7 @@ public class MusicManager : MonoBehaviour
     {
         //playing around with shit, eventually Ill match music to timer or vis versa so clips end as round ends and trigger when player starts round
         musicAS.volume = 0.5f;
-        //musicAS.pitch = 0.8f;
+        musicAS.pitch = 1 - ((gameManager.waveNumber - 1) * gameManager.waveLengthIncrease/60);
         musicAS.clip = level1Music;
         musicAS.Play();
     }
@@ -34,11 +36,5 @@ public class MusicManager : MonoBehaviour
     {
         musicAS.Stop();
         PlayMusic();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
